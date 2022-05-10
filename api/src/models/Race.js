@@ -6,6 +6,10 @@ module.exports = (sequelize) => {
   sequelize.define(
     "race",
     {
+      db_id: {
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
+      },
       name: {
         type: DataTypes.STRING,
         unique: true,

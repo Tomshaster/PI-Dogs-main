@@ -7,6 +7,7 @@ const dog = Router();
 
 dog.get("/", async (req, res) => {
   const { name } = req.query;
+
   try {
     let response = await axios.get(
       `https://api.thedogapi.com/v1/breeds?api_key=${YOUR_API_KEY}`
@@ -25,8 +26,13 @@ dog.get("/", async (req, res) => {
         if (d.name.toLowerCase().includes(name.toLowerCase())) return d;
       });
     }
+
+    let where = {};
+    if (name) {
+      where = { name: { [Op.substring]: name } };
+    }
     let dbRes = await Race.findAll({
-      where: { name: { [Op.substring]: name } },
+      where: where,
       include: [
         {
           model: Temperaments,
@@ -37,8 +43,8 @@ dog.get("/", async (req, res) => {
     if (apiRes.length === 0 && dbRes.length === 0) {
       res.send("No se encontraron los perros buscados :c");
     }
-
-    res.send([apiRes, dbRes]);
+    let finalRes = apiRes.concat(dbRes);
+    res.send(finalRes);
   } catch (error) {
     console.log(error);
     res.send("error 500");
@@ -52,7 +58,14 @@ dog.get("/:idRaza", async (req, res) => {
       const perri = await Race.findByPk(
         idRaza,
         {
-          attributes: ["image", "name", "weight", "height", "life_span"],
+          attributes: [
+            "image",
+            "name",
+            "weight",
+            "height",
+            "life_span",
+            "db_id",
+          ],
         },
         {
           include: [
@@ -63,19 +76,29 @@ dog.get("/:idRaza", async (req, res) => {
           ],
         }
       );
-      res.send(perri);
+      if (perri) {
+        res.send(perri);
+      } else {
+        res.send({ msg: "algo salió mal :(" });
+      }
     } else {
       let response = await axios.get(
         `https://api.thedogapi.com/v1/breeds?api_key=${YOUR_API_KEY}`
       );
       let filteredResp = response.data.find((r) => (r.id = idRaza));
-      res.send(filteredResp);
+      if (filteredResp) {
+        res.send(filteredResp);
+      } else {
+        res.send({ msg: "algo salió mal :(" });
+      }
     }
   } catch (error) {
     console.log(error);
     res.sond("error 500");
   }
 });
+
+dog.post("/", async (req, res) => {});
 
 module.exports = dog;
 
