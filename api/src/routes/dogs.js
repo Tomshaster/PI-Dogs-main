@@ -9,6 +9,8 @@ dog.get("/", async (req, res) => {
   const { name } = req.query;
 
   try {
+    //respuesta de la API
+
     let response = await axios.get(
       `https://api.thedogapi.com/v1/breeds?api_key=${YOUR_API_KEY}`
     );
@@ -27,6 +29,8 @@ dog.get("/", async (req, res) => {
       });
     }
 
+    //respuesta de la DB
+
     let where = {};
     if (name) {
       where = { name: { [Op.substring]: name } };
@@ -40,8 +44,9 @@ dog.get("/", async (req, res) => {
         },
       ],
     });
+
     if (apiRes.length === 0 && dbRes.length === 0) {
-      res.send("No se encontraron los perros buscados :c");
+      return res.send([]);
     }
     let finalRes = apiRes.concat(dbRes);
     res.send(finalRes);
