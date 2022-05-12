@@ -1,6 +1,6 @@
 const { Router } = require("express");
 const axios = require("axios");
-const { Race, Temperaments, Op } = require("../db.js");
+const { Race, Temperament, Op } = require("../db.js");
 const { YOUR_API_KEY } = process.env;
 
 const temperament = Router();
@@ -30,11 +30,11 @@ temperament.get("/", async (req, res) => {
         let temp = {
           name: apiRes[t],
         };
-        await Temperaments.create(temp);
+        await Temperament.create(temp);
       }
       populated = true;
     }
-    let data = await Temperaments.findAll();
+    let data = await Temperament.findAll();
     res.send(data);
   } catch (error) {
     console.log(error);

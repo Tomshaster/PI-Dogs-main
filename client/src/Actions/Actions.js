@@ -1,13 +1,32 @@
 const axios = require("axios");
 export const GET_ALL_RACES = "GET_ALL_RACES";
-export const GET_ALL_TEMPERAMENTS = "GET_ALL_TEMPERAMENTS";
 export const SEARCH_RACES = "SEARCH_RACES";
+export const GET_DETAILS = "GET_DETAILS";
+export const GET_ALL_TEMPERAMENTS = "GET_ALL_TEMPERAMENTS";
 
 export function getAllRaces() {
   return function (dispatch) {
     return axios
       .get("http://localhost:3001/dogs")
       .then((races) => dispatch({ type: GET_ALL_RACES, payload: races.data }));
+  };
+}
+
+export function searchRaces(race) {
+  return function (dispatch) {
+    return axios
+      .get(`http://localhost:3001/dogs?name=${race}`)
+      .then((races) => dispatch({ type: SEARCH_RACES, payload: races.data }));
+  };
+}
+
+export function getDetails(id) {
+  return function (dispatch) {
+    return axios
+      .get(`http://localhost:3001/dogs/${id}`)
+      .then((details) =>
+        dispatch({ type: GET_DETAILS, payload: details.data })
+      );
   };
 }
 
@@ -18,13 +37,5 @@ export function getAllTemperaments() {
       .then((temperaments) =>
         dispatch({ type: GET_ALL_TEMPERAMENTS, payload: temperaments.data })
       );
-  };
-}
-
-export function searchRaces(race) {
-  return function (dispatch) {
-    return axios
-      .get(`http://localhost:3001/dogs?name=${race}`)
-      .then((races) => dispatch({ type: SEARCH_RACES, payload: races.data }));
   };
 }

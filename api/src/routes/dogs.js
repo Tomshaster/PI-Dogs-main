@@ -1,6 +1,6 @@
 const { Router } = require("express");
 const axios = require("axios");
-const { Race, Temperaments, Op } = require("../db.js");
+const { Race, Temperament, Op } = require("../db.js");
 const { YOUR_API_KEY } = process.env;
 
 const dog = Router();
@@ -39,7 +39,7 @@ dog.get("/", async (req, res) => {
       where: where,
       include: [
         {
-          model: Temperaments,
+          model: Temperament,
           attributes: ["name"],
         },
       ],
@@ -60,27 +60,9 @@ dog.get("/:idRaza", async (req, res) => {
   const { idRaza } = req.params;
   try {
     if (isNaN(idRaza)) {
-      const perri = await Race.findByPk(
-        idRaza,
-        {
-          attributes: [
-            "image",
-            "name",
-            "weight",
-            "height",
-            "life_span",
-            "db_id",
-          ],
-        },
-        {
-          include: [
-            {
-              model: Temperaments,
-              attributes: ["name"],
-            },
-          ],
-        }
-      );
+      const perri = await Race.findByPk(idRaza, {
+        include: { model: Temperament, required: true },
+      });
       if (perri) {
         res.send(perri);
       } else {
@@ -90,7 +72,7 @@ dog.get("/:idRaza", async (req, res) => {
       let response = await axios.get(
         `https://api.thedogapi.com/v1/breeds?api_key=${YOUR_API_KEY}`
       );
-      let filteredResp = response.data.find((r) => (r.id = idRaza));
+      let filteredResp = response.data.find((r) => r.id == idRaza);
       if (filteredResp) {
         res.send(filteredResp);
       } else {
@@ -99,7 +81,7 @@ dog.get("/:idRaza", async (req, res) => {
     }
   } catch (error) {
     console.log(error);
-    res.sond("error 500");
+    res.send("error 500");
   }
 });
 
