@@ -23,17 +23,16 @@ export default function Details() {
           <p>Life Span: {details.life_span}</p>
           <p>
             Temperaments:{" "}
-            {details.temperaments
-              ? details.temperaments.map((t) => t.name + ", ")
-              : ""}
+            {details.temperaments &&
+              details.temperaments.map((t) => t.name + ", ")}
           </p>
           <img src={details.image} alt="Foto de perro" />
         </div>
       ) : (
         <div>
           <p>{details.name}</p>
-          <p>{details.weight ? `Weight: ${details.weight.metric} Kg` : ""}</p>
-          <p>{details.height ? `Height: ${details.height.metric} Cm` : ""}</p>
+          <p>{details.weight && `Weight: ${details.weight.metric} Kg`}</p>
+          <p>{details.height && `Height: ${details.height.metric} Cm`}</p>
           <p>Life Span: {details.life_span}</p>
           <p>{details.temperament}</p>
           <p>

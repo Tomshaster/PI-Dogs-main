@@ -1,0 +1,29 @@
+.form {
+  background-color: gray;
+}
+.temperament {
+  color: white;
+  padding: 5px;
+  border-radius: 10px;
+  background-color: rgb(2, 2, 207);
+  margin: 1%;
+  border: none;
+}
+
+.clicked {
+  background-color: red;
+  padding: 5px;
+  border-radius: 10px;
+  margin: 1%;
+  border: none;
+  color: white;
+}
+
+.temps {
+  background-color: gray;
+
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}

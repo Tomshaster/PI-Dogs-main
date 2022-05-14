@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllRaces, searchRaces } from "../../Actions/Actions";
+import {
+  getAllRaces,
+  getAllTemperaments,
+  searchRaces,
+} from "../../Actions/Actions";
 import Card from "../Card/Card";
 import "./Home.css";
 
@@ -11,11 +15,12 @@ export default function Home(props) {
   const [dogNumber] = useState(6);
   const currentPageNumber = pageNumber * dogNumber - dogNumber;
   const paginatedRaces = races.slice(currentPageNumber, dogNumber * pageNumber);
-
+  const temperaments = useSelector((state) => state.temperaments);
   const [search, setSearch] = useState("");
 
   useEffect(() => {
     dispatch(getAllRaces());
+    dispatch(getAllTemperaments());
   }, []);
 
   const handlePrev = () => {
@@ -47,9 +52,9 @@ export default function Home(props) {
           type="text"
           value={search}
           onChange={(e) => handleChange(e)}
-          placeholder="Buscar raza"
+          placeholder="Search Race"
         />
-        <button type="submit">Buscar</button>
+        <button type="submit">Search</button>
       </form>
       <div className="container">
         {races.length < 1 ? (

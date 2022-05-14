@@ -27,6 +27,9 @@ temperament.get("/", async (req, res) => {
       apiRes = [...new Set(apiRes)]; // Removes duplicates from Array
 
       for (let t = 0; t < apiRes.length; t++) {
+        if (apiRes[t] === null) {
+          continue;
+        }
         let temp = {
           name: apiRes[t],
         };
@@ -34,7 +37,9 @@ temperament.get("/", async (req, res) => {
       }
       populated = true;
     }
-    let data = await Temperament.findAll();
+    let data = await Temperament.findAll({
+      where: { name: { [Op.not]: null } },
+    });
     res.send(data);
   } catch (error) {
     console.log(error);
