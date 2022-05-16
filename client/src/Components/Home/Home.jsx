@@ -73,6 +73,20 @@ export default function Home(props) {
                   />
                 </div>
               );
+            } else {
+              let temp = r.temperaments.map((t) => t.name);
+              temp = temp.toString();
+              return (
+                <div className="card">
+                  <Card
+                    name={r.name}
+                    img={r.image}
+                    temp={temp}
+                    weight={r.weight}
+                    id={r.name}
+                  />
+                </div>
+              );
             }
           })
         )}

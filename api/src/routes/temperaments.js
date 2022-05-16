@@ -47,4 +47,15 @@ temperament.get("/", async (req, res) => {
   }
 });
 
+temperament.post("/", async (req, res) => {
+  const { name } = req.body;
+  try {
+    Temperament.create({ name: name });
+    res.send("Temperament created succesfully");
+  } catch (error) {
+    console.log(error);
+    res.send("Error creating temperament");
+  }
+});
+
 module.exports = temperament;

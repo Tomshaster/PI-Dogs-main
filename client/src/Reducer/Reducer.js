@@ -1,4 +1,5 @@
 import {
+  CLEAR_TEMPERAMENTS,
   DESELECT_TEMPERAMENT,
   GET_ALL_RACES,
   GET_ALL_TEMPERAMENTS,
@@ -57,6 +58,11 @@ export default function rootReducer(state = initialState, action) {
       return {
         ...state,
         selectedTemps: aux2,
+      };
+    case CLEAR_TEMPERAMENTS:
+      return {
+        ...state,
+        selectedTemps: [],
       };
     default:
       return { ...state };

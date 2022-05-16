@@ -5,6 +5,9 @@ export const GET_DETAILS = "GET_DETAILS";
 export const GET_ALL_TEMPERAMENTS = "GET_ALL_TEMPERAMENTS";
 export const SELECT_TEMPERAMENT = "SELECT_TEMPERAMENT";
 export const DESELECT_TEMPERAMENT = "DESELECT_TEMPERAMENT";
+export const ADD_TEMPERAMENT = "ADD_TEMPERAMENT";
+export const CLEAR_TEMPERAMENTS = "CLEAR_TEMPERAMENTS";
+export const ADD_RACE = "ADD_RACE";
 
 export function getAllRaces() {
   return function (dispatch) {
@@ -53,5 +56,35 @@ export function deselectTemperament(temp) {
   return {
     type: DESELECT_TEMPERAMENT,
     payload: temp,
+  };
+}
+
+export function clearTemperaments() {
+  return {
+    type: CLEAR_TEMPERAMENTS,
+    payload: null,
+  };
+}
+
+export function addTemperament(temp) {
+  return function (dispatch) {
+    return axios
+      .post("http://localhost:3001/temperament", { name: temp })
+      .then((response) =>
+        dispatch({ type: ADD_TEMPERAMENT, payload: response.data })
+      );
+  };
+}
+
+export function addRace(info) {
+  return function (dispatch) {
+    return axios
+      .post("http://localhost:3001/dogs", {
+        race: info.race,
+        temperaments: info.temperaments,
+      })
+      .then((response) => {
+        dispatch({ type: ADD_RACE, payload: response.data });
+      });
   };
 }

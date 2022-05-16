@@ -85,7 +85,24 @@ dog.get("/:idRaza", async (req, res) => {
   }
 });
 
-dog.post("/", async (req, res) => {});
+dog.post("/", async (req, res) => {
+  const { race, temperaments } = req.body;
+  console.log(temperaments);
+  try {
+    let newRace = await Race.create(race);
+
+    temperaments.forEach(async (element) => {
+      let aux = await Temperament.findOne({
+        where: { name: element },
+      });
+      newRace.addTemperament(aux);
+    });
+    res.send(newRace);
+  } catch (error) {
+    console.log(error);
+    res.send("error");
+  }
+});
 
 module.exports = dog;
 

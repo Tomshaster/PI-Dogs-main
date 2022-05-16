@@ -19,6 +19,11 @@
   color: white;
 }
 
+.danger {
+  color: red;
+  font-size: small;
+}
+
 .temps {
   background-color: gray;
 

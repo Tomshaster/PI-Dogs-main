@@ -15,9 +15,6 @@ module.exports = (sequelize) => {
         unique: true,
         primaryKey: true,
       },
-      breed_group: {
-        type: DataTypes.STRING,
-      },
       height: {
         type: DataTypes.STRING,
       },
@@ -29,6 +26,7 @@ module.exports = (sequelize) => {
       },
       image: {
         type: DataTypes.STRING,
+        defaultValue: "no image",
       },
     },
     { timestamps: false }
