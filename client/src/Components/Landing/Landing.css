@@ -1,0 +1,7 @@
+.landing {
+  transition: width 2s;
+}
+
+.landing:hover {
+  width: 60%;
+}

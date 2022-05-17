@@ -4,12 +4,21 @@ import Home from "./Components/Home/Home.jsx";
 import Navbar from "./Components/Navbar/Navbar.jsx";
 import Details from "./Components/Details/Details";
 import Create from "./Components/Create/Create";
+import Landing from "./Components/Landing/Landing";
 function App() {
   return (
     <div className="App">
-      <Navbar />
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Landing />} />
+        <Route
+          path="/home"
+          element={
+            <>
+              <Navbar />
+              <Home />
+            </>
+          }
+        />
         <Route path="/details/:id" element={<Details />} />
         <Route path="/create" element={<Create />} />
       </Routes>

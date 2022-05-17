@@ -19,3 +19,7 @@ img {
   flex-wrap: wrap;
   justify-content: center;
 }
+.filters_search {
+  display: flex;
+  align-items: flex-start;
+}

@@ -1,34 +1,50 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  clearTemperaments,
   getAllRaces,
   getAllTemperaments,
   searchRaces,
 } from "../../Actions/Actions";
 import Card from "../Card/Card";
+import Dropdown from "../Dropdown/Dropdown";
+import Element from "../Dropdown/Element";
 import "./Home.css";
 
 export default function Home(props) {
-  const races = useSelector((state) => state.races);
-  const dispatch = useDispatch();
+  const allRaces = useSelector((state) => state.races);
+  const temperaments = useSelector((state) => state.temperaments);
+  const selectedTemps = useSelector((state) => state.selectedTemps);
+  const [races, setRaces] = useState([]);
   const [pageNumber, setPageNumber] = useState(1);
-  const [dogNumber] = useState(6);
+  const [dogNumber] = useState(8);
   const currentPageNumber = pageNumber * dogNumber - dogNumber;
   const paginatedRaces = races.slice(currentPageNumber, dogNumber * pageNumber);
-  const temperaments = useSelector((state) => state.temperaments);
   const [search, setSearch] = useState("");
+  const dispatch = useDispatch();
+
+  temperaments.sort((a, b) => {
+    if (a.name < b.name) return -1;
+    if (a.name > b.name) return 1;
+    return 0;
+  });
 
   useEffect(() => {
     dispatch(getAllRaces());
     dispatch(getAllTemperaments());
+    dispatch(clearTemperaments());
   }, []);
+
+  useEffect(() => {
+    setRaces(allRaces);
+  }, [allRaces]);
 
   const handlePrev = () => {
     if (pageNumber === 1) return;
     setPageNumber(pageNumber - 1);
   };
   const handleNext = () => {
-    if (pageNumber * 6 > races.length) return;
+    if (pageNumber * 6 >= races.length) return;
     setPageNumber(pageNumber + 1);
   };
 
@@ -45,17 +61,126 @@ export default function Home(props) {
     dispatch(searchRaces(search));
   };
 
+  const handleFilter = async () => {
+    let filter = await allRaces.filter((r) => {
+      if (
+        "api_id" in r &&
+        r.temperament &&
+        selectedTemps.every((t) => {
+          return r.temperament.includes(t);
+        })
+      ) {
+        return true;
+      } else {
+        if ("api_id" in r) {
+          return false;
+        }
+        let temp = r.temperaments.map((t) => t.name);
+        temp = temp.toString();
+        if (
+          temp &&
+          selectedTemps.every((t) => {
+            return temp.includes(t);
+          })
+        ) {
+          return true;
+        } else return false;
+      }
+    });
+    setRaces(filter);
+    setPageNumber(1);
+  };
+
+  const clearFilter = async () => {
+    setRaces(allRaces);
+    dispatch(clearTemperaments());
+    setPageNumber(1);
+  };
+
+  const handleOrder = (order) => {
+    let ordered = races;
+    switch (order) {
+      case "a-z":
+        ordered = ordered.sort((a, b) => {
+          if (a.name < b.name) return -1;
+          if (a.name > b.name) return 1;
+          return 0;
+        });
+        break;
+
+      case "z-a":
+        ordered = ordered.sort((a, b) => {
+          if (a.name < b.name) return 1;
+          if (a.name > b.name) return -1;
+          return 0;
+        });
+        break;
+
+      case "asc":
+        ordered = ordered.sort((a, b) => {
+          if (
+            parseInt(a.weight.split(" ")[0]) < parseInt(b.weight.split(" ")[0])
+          )
+            return -1;
+          if (
+            parseInt(a.weight.split(" ")[0]) > parseInt(b.weight.split(" ")[0])
+          )
+            return 1;
+          return 0;
+        });
+        break;
+      case "desc":
+        ordered = ordered.sort((a, b) => {
+          if (
+            parseInt(a.weight.split(" ")[0]) < parseInt(b.weight.split(" ")[0])
+          )
+            return 1;
+          if (
+            parseInt(a.weight.split(" ")[0]) > parseInt(b.weight.split(" ")[0])
+          )
+            return -1;
+          return 0;
+        });
+        break;
+      default:
+        break;
+    }
+    setRaces(ordered);
+    setPageNumber(1);
+    dispatch(getAllTemperaments());
+    console.log(races);
+  };
+
   return (
     <div className="container">
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          value={search}
-          onChange={(e) => handleChange(e)}
-          placeholder="Search Race"
-        />
-        <button type="submit">Search</button>
-      </form>
+      <div className="filters_search">
+        <form onSubmit={handleSubmit}>
+          <input
+            type="text"
+            value={search}
+            onChange={(e) => handleChange(e)}
+            placeholder="Search Race"
+          />
+          <button type="submit">Search</button>
+        </form>
+        <div>
+          <Dropdown text="Choose Temperaments">
+            {temperaments.map((t) => {
+              return <Element text={t.name} />;
+            })}
+          </Dropdown>
+          <button onClick={handleFilter}>Filter</button>
+          <button onClick={clearFilter}>Clear Filter</button>
+        </div>
+        <div>
+          <Dropdown text="Order By">
+            <li onClick={() => handleOrder("a-z")}>A - Z</li>
+            <li onClick={() => handleOrder("z-a")}>Z - A</li>
+            <li onClick={() => handleOrder("asc")}>Weight {"(asc)"}</li>
+            <li onClick={() => handleOrder("desc")}>Weight {"(desc)"}</li>
+          </Dropdown>
+        </div>
+      </div>
       <div className="container">
         {races.length < 1 ? (
           <div> "No se encontraron perritos :c" </div>

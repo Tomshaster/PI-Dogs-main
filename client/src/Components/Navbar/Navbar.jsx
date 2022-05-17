@@ -5,7 +5,7 @@ export default function Navbar() {
 
   return (
     <>
-      <button onClick={() => navigate("/")}>Home</button>
+      <button onClick={() => navigate("/home")}>Home</button>
       <button onClick={() => navigate("/create")}>Creation</button>
     </>
   );
