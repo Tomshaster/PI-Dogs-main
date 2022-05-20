@@ -7,7 +7,7 @@ export default function Details() {
   const { id } = useParams();
   const dispatch = useDispatch();
   const details = useSelector((state) => state.details);
-
+  console.log(id);
   useEffect(() => {
     dispatch(getDetails(id));
   }, []);
@@ -26,7 +26,7 @@ export default function Details() {
             {details.temperaments &&
               details.temperaments.map((t) => t.name + ", ")}
           </p>
-          <img src={details.image} alt="Foto de perro" />
+          <img src={details.image} alt="Altimage.png" />
         </div>
       ) : (
         <div>
@@ -38,7 +38,7 @@ export default function Details() {
           <p>
             <img
               src={details.image ? details.image.url : ""}
-              alt="Imagen de perro"
+              alt="Altimage.png"
             />
           </p>
         </div>

@@ -33,7 +33,7 @@ dog.get("/", async (req, res) => {
 
     let where = {};
     if (name) {
-      where = { name: { [Op.substring]: name } };
+      where = { name: { [Op.iLike]: "%" + name + "%" } };
     }
     let dbRes = await Race.findAll({
       where: where,
@@ -58,6 +58,7 @@ dog.get("/", async (req, res) => {
 
 dog.get("/:idRaza", async (req, res) => {
   const { idRaza } = req.params;
+  console.log(idRaza);
   try {
     if (isNaN(idRaza)) {
       const perri = await Race.findByPk(idRaza, {
@@ -97,10 +98,10 @@ dog.post("/", async (req, res) => {
       });
       newRace.addTemperament(aux);
     });
-    res.send(newRace);
+    res.send({ success: "Race created succesfully" });
   } catch (error) {
     console.log(error);
-    res.send("error");
+    res.send(error);
   }
 });
 

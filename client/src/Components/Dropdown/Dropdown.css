@@ -1,7 +1,8 @@
-ul {
+.drop {
   list-style: none;
   width: 100%;
-  height: 100px;
+  height: fit-content;
+  max-height: 150px;
   overflow-x: hidden;
   overflow-y: scroll;
   padding: inherit;

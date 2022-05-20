@@ -1,4 +1,5 @@
 import {
+  ADD_RACE,
   CLEAR_TEMPERAMENTS,
   DESELECT_TEMPERAMENT,
   GET_ALL_RACES,
@@ -13,6 +14,7 @@ const initialState = {
   temperaments: [],
   selectedTemps: [],
   details: {},
+  createResponse: {},
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -33,6 +35,11 @@ export default function rootReducer(state = initialState, action) {
           races: action.payload,
         };
       }
+    case ADD_RACE:
+      return {
+        ...state,
+        createResponse: action.payload,
+      };
     case GET_DETAILS:
       return {
         ...state,

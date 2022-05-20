@@ -8,12 +8,14 @@ export default function Element(props) {
   const selectedTemps = useSelector((state) => state.selectedTemps);
 
   const select = (temp) => {
-    setSelected(!selected);
-    if (!selected) {
+    if (!selectedTemps.includes(props.text)) {
       dispatch(selectTemperament(temp));
+      setSelected(!selected);
     } else {
       dispatch(deselectTemperament(temp));
+      setSelected(!selected);
     }
+    console.log(selectedTemps);
   };
 
   return (

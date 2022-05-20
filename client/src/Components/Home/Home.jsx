@@ -15,6 +15,7 @@ export default function Home(props) {
   const allRaces = useSelector((state) => state.races);
   const temperaments = useSelector((state) => state.temperaments);
   const selectedTemps = useSelector((state) => state.selectedTemps);
+  const [displayed, setDisplayed] = useState(allRaces);
   const [races, setRaces] = useState([]);
   const [pageNumber, setPageNumber] = useState(1);
   const [dogNumber] = useState(8);
@@ -36,15 +37,19 @@ export default function Home(props) {
   }, []);
 
   useEffect(() => {
-    setRaces(allRaces);
+    setDisplayed(allRaces);
   }, [allRaces]);
+
+  useEffect(() => {
+    setRaces(displayed);
+  }, [displayed]);
 
   const handlePrev = () => {
     if (pageNumber === 1) return;
     setPageNumber(pageNumber - 1);
   };
   const handleNext = () => {
-    if (pageNumber * 6 >= races.length) return;
+    if (pageNumber * 8 >= displayed.length) return;
     setPageNumber(pageNumber + 1);
   };
 
@@ -62,7 +67,7 @@ export default function Home(props) {
   };
 
   const handleFilter = async () => {
-    let filter = await allRaces.filter((r) => {
+    let filter = await displayed.filter((r) => {
       if (
         "api_id" in r &&
         r.temperament &&
@@ -87,12 +92,14 @@ export default function Home(props) {
         } else return false;
       }
     });
+    console.log(filter);
+    console.log(displayed);
     setRaces(filter);
     setPageNumber(1);
   };
 
   const clearFilter = async () => {
-    setRaces(allRaces);
+    setRaces(displayed);
     dispatch(clearTemperaments());
     setPageNumber(1);
   };
@@ -151,6 +158,28 @@ export default function Home(props) {
     console.log(races);
   };
 
+  const toggleShow = async (show) => {
+    let display = allRaces;
+    switch (show) {
+      case "api":
+        display = display.filter((r) => "api_id" in r);
+        break;
+      case "db":
+        display = display.filter((r) => {
+          if ("api_id" in r) {
+            return false;
+          } else {
+            return true;
+          }
+        });
+      default:
+        break;
+    }
+    setDisplayed(display);
+    dispatch(clearTemperaments());
+    setPageNumber(1);
+  };
+
   return (
     <div className="container">
       <div className="filters_search">
@@ -163,6 +192,13 @@ export default function Home(props) {
           />
           <button type="submit">Search</button>
         </form>
+        <div>
+          <Dropdown text="Display">
+            <li onClick={() => toggleShow("api")}>Display Races from API</li>
+            <li onClick={() => toggleShow("db")}>Display Races from DB</li>
+            <li onClick={() => toggleShow("both")}>Display Both</li>
+          </Dropdown>
+        </div>
         <div>
           <Dropdown text="Choose Temperaments">
             {temperaments.map((t) => {
@@ -188,7 +224,7 @@ export default function Home(props) {
           paginatedRaces.map((r) => {
             if ("api_id" in r) {
               return (
-                <div className="card">
+                <div className={"card"}>
                   <Card
                     name={r.name}
                     img={r.image}
@@ -202,7 +238,7 @@ export default function Home(props) {
               let temp = r.temperaments.map((t) => t.name);
               temp = temp.toString();
               return (
-                <div className="card">
+                <div className={"card"}>
                   <Card
                     name={r.name}
                     img={r.image}

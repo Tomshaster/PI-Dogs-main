@@ -19,8 +19,24 @@ function App() {
             </>
           }
         />
-        <Route path="/details/:id" element={<Details />} />
-        <Route path="/create" element={<Create />} />
+        <Route
+          path="/home/details/:id"
+          element={
+            <>
+              {" "}
+              <Navbar /> <Details />
+            </>
+          }
+        />
+        <Route
+          path="/create"
+          element={
+            <>
+              {" "}
+              <Navbar /> <Create />{" "}
+            </>
+          }
+        />
       </Routes>
     </div>
   );

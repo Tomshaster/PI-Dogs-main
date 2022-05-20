@@ -9,11 +9,14 @@ import {
 import Button from "./Button";
 import validate from "./Validate";
 import "./Create.css";
+import { useNavigate } from "react-router-dom";
 
 export default function Create() {
   const temps = useSelector((state) => state.temperaments);
   const selectedTemps = useSelector((state) => state.selectedTemps);
+  const response = useSelector((state) => state.createResponse);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [test, setTest] = useState(true);
   const [add, setAdd] = useState("");
   const [input, setInput] = useState({
@@ -68,10 +71,14 @@ export default function Create() {
     }
   };
 
-  const handleCreate = () => {
+  const handleCreate = async () => {
     if (Object.keys(errors).length > 0) {
-      console.log("errores");
+      return;
     } else {
+      if (selectedTemps.length < 1) {
+        return alert("Select at least one Temperament");
+      }
+      input.name = input.name.charAt(0).toUpperCase() + input.name.slice(1);
       let newRace = {
         name: input.name,
         height: `${input.minHeight} - ${input.maxHeight} Cm`,
@@ -84,8 +91,13 @@ export default function Create() {
         race: newRace,
         temperaments: temperaments,
       };
-      dispatch(addRace(info));
-      console.log(input);
+      await dispatch(addRace(info));
+      if ("success" in response) {
+        alert(response.success);
+        navigate("/home");
+      } else {
+        alert("Cannot create Race with uplicate name");
+      }
     }
   };
 

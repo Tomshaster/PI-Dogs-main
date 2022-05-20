@@ -13,7 +13,10 @@ export default function Dropdown(props) {
       <span className="filtermenu" onClick={handleToggle}>
         {props.text}
       </span>
-      <ul style={display ? { display: "block" } : { display: "none" }}>
+      <ul
+        style={display ? { display: "block" } : { display: "none" }}
+        className="drop"
+      >
         {props.children}
       </ul>
     </div>
