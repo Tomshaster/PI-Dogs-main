@@ -1,3 +1,16 @@
 .details {
-  background-color: gray;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  background-color: rgba(128, 128, 128, 0.808);
+  width: 35vw;
+  border: 1px solid;
+  border-color: rgba(248, 103, 51, 0.699);
+  border-radius: 10px;
+  margin: auto;
+}
+
+.details:hover {
+  background-color: rgba(128, 128, 128);
+  transition: background-color 1000ms linear;
 }

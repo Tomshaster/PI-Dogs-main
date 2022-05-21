@@ -219,7 +219,7 @@ export default function Home(props) {
       </div>
       <div className="container">
         {races.length < 1 ? (
-          <div> "No se encontraron perritos :c" </div>
+          <div className="noperros"> No se encontraron perritos :c </div>
         ) : (
           paginatedRaces.map((r) => {
             if ("api_id" in r) {

@@ -47,6 +47,12 @@ export default function Create() {
     );
   }, [input]);
 
+  temps.sort((a, b) => {
+    if (a.name < b.name) return -1;
+    if (a.name > b.name) return 1;
+    return 0;
+  });
+
   const handleChange = (e) => {
     setInput({
       ...input,
@@ -92,11 +98,11 @@ export default function Create() {
         temperaments: temperaments,
       };
       await dispatch(addRace(info));
-      if ("success" in response) {
-        alert(response.success);
-        navigate("/home");
+      if ("name" in response) {
+        alert("Cannot create Race with duplicate name");
       } else {
-        alert("Cannot create Race with uplicate name");
+        alert("Race created succesfully");
+        navigate("/home");
       }
     }
   };
@@ -183,9 +189,9 @@ export default function Create() {
           )}
         </form>
       </div>
-      <div>
-        Temperaments:
-        <ul className="temps">
+      <div className="temps">
+        Choose Temperaments:
+        <ul>
           {temps.map((t) => {
             return <Button name={t.name} />;
           })}

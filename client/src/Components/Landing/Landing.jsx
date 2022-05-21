@@ -11,11 +11,13 @@ export default function Landing() {
     dispatch(getAllTemperaments());
   }, []);
   return (
-    <img
-      className="landing"
-      src="Image1.png"
-      alt="Nada"
-      onClick={() => navigate("/home")}
-    />
+    <div className="landingcont">
+      <img
+        className="landing"
+        src="Image1.png"
+        alt="Nada"
+        onClick={() => navigate("/home")}
+      />
+    </div>
   );
 }

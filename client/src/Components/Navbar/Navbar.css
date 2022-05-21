@@ -1,0 +1,6 @@
+.nav {
+  background-color: rgba(248, 103, 51, 0.699);
+  display: flex;
+  justify-content: space-evenly;
+  padding: 10px;
+}
