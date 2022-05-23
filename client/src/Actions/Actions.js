@@ -12,7 +12,7 @@ export const ADD_RACE = "ADD_RACE";
 export function getAllRaces() {
   return function (dispatch) {
     return axios
-      .get("http://localhost:3001/dogs")
+      .get("/dogs")
       .then((races) => dispatch({ type: GET_ALL_RACES, payload: races.data }));
   };
 }
@@ -20,7 +20,7 @@ export function getAllRaces() {
 export function searchRaces(race) {
   return function (dispatch) {
     return axios
-      .get(`http://localhost:3001/dogs?name=${race}`)
+      .get(`/dogs?name=${race}`)
       .then((races) => dispatch({ type: SEARCH_RACES, payload: races.data }));
   };
 }
@@ -28,7 +28,7 @@ export function searchRaces(race) {
 export function getDetails(id) {
   return function (dispatch) {
     return axios
-      .get(`http://localhost:3001/dogs/${id}`)
+      .get(`/dogs/${id}`)
       .then((details) =>
         dispatch({ type: GET_DETAILS, payload: details.data })
       );
@@ -38,7 +38,7 @@ export function getDetails(id) {
 export function getAllTemperaments() {
   return function (dispatch) {
     return axios
-      .get("http://localhost:3001/temperament")
+      .get("/temperament")
       .then((temperaments) =>
         dispatch({ type: GET_ALL_TEMPERAMENTS, payload: temperaments.data })
       );
@@ -69,7 +69,7 @@ export function clearTemperaments() {
 export function addTemperament(temp) {
   return function (dispatch) {
     return axios
-      .post("http://localhost:3001/temperament", { name: temp })
+      .post("/temperament", { name: temp })
       .then((response) =>
         dispatch({ type: ADD_TEMPERAMENT, payload: response.data })
       );
@@ -79,7 +79,7 @@ export function addTemperament(temp) {
 export function addRace(info) {
   return function (dispatch) {
     return axios
-      .post("http://localhost:3001/dogs", {
+      .post("/dogs", {
         race: info.race,
         temperaments: info.temperaments,
       })
