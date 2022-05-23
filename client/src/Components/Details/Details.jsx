@@ -27,7 +27,7 @@ export default function Details() {
             {details.temperaments &&
               details.temperaments.map((t) => t.name + ", ")}
           </p>
-          <img src={details.image} alt="Altimage.png" />
+          <img src={details.image} alt="Dog Image" />
         </div>
       ) : (
         <div>
@@ -39,7 +39,7 @@ export default function Details() {
           <p>
             <img
               src={details.image ? details.image.url : ""}
-              alt="Altimage.png"
+              alt="Dog Image.png"
             />
           </p>
         </div>
