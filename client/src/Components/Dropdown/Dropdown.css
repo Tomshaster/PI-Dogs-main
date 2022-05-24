@@ -10,12 +10,13 @@
 .temp {
   height: 30px;
   background-color: rgba(128, 128, 128, 0.808);
-
+  cursor: default;
   border-bottom: black 1px solid;
 }
 .selTemp {
   height: 30px;
   background: rgb(255, 42, 42, 0.808);
+  cursor: default;
   border-bottom: black 1px solid;
 }
 .filtermenu {
@@ -23,4 +24,5 @@
   border: solid;
   border-color: rgba(248, 103, 51, 0.699);
   border-radius: 5px;
+  cursor: default;
 }

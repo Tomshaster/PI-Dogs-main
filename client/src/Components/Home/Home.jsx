@@ -11,7 +11,7 @@ import Dropdown from "../Dropdown/Dropdown";
 import Element from "../Dropdown/Element";
 import "./Home.css";
 
-export default function Home(props) {
+export default function Home() {
   const allRaces = useSelector((state) => state.races);
   const temperaments = useSelector((state) => state.temperaments);
   const selectedTemps = useSelector((state) => state.selectedTemps);

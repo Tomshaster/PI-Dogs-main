@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getDetails } from "../../Actions/Actions";
@@ -27,7 +27,7 @@ export default function Details() {
             {details.temperaments &&
               details.temperaments.map((t) => t.name + ", ")}
           </p>
-          <img src={details.image} alt="Dog Image" />
+          <img src={details.image} alt="Dog" />
         </div>
       ) : (
         <div>
@@ -37,10 +37,7 @@ export default function Details() {
           <p>Life Span: {details.life_span}</p>
           <p>{details.temperament}</p>
           <p>
-            <img
-              src={details.image ? details.image.url : ""}
-              alt="Dog Image.png"
-            />
+            <img src={details.image ? details.image.url : ""} alt="Dog.png" />
           </p>
         </div>
       )}

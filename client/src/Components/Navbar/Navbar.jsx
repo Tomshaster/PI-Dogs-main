@@ -6,8 +6,13 @@ export default function Navbar() {
 
   return (
     <div className="nav">
-      <button onClick={() => navigate("/home")}>Home</button>
-      <button onClick={() => navigate("/create")}>Creation</button>
+      <img src="favicon.ico" alt="icon" className="icon" />
+      <button onClick={() => navigate("/home")} className="navbutton">
+        Home
+      </button>
+      <button onClick={() => navigate("/create")} className="navbutton">
+        Creation
+      </button>
     </div>
   );
 }

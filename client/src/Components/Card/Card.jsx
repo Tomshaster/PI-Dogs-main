@@ -9,7 +9,7 @@ export default function Card(props) {
         <Link to={`details/${props.id}`}> {props.name} </Link>{" "}
       </p>
       <p>
-        <img src={props.img} alt="Dog Image" />
+        <img src={props.img} alt="Dog" />
       </p>
       <p>{props.temp}</p>
       <p>{props.weight}</p>

@@ -1,5 +1,6 @@
 img {
   width: 20vw;
+  border-radius: 5px;
 }
 
 .card {
@@ -13,6 +14,7 @@ img {
   border-radius: 10px;
   margin: 1%;
   transition: opacity 1s;
+  transition: background-color 1000ms linear;
 }
 
 .card:hover {
@@ -37,6 +39,7 @@ li {
   height: 30px;
   background-color: rgba(128, 128, 128, 0.808);
   border-bottom: black 1px solid;
+  cursor: default;
 }
 
 .noperros {
