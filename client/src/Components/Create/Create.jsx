@@ -47,12 +47,6 @@ export default function Create() {
     );
   }, [input]);
 
-  temps.sort((a, b) => {
-    if (a.name < b.name) return -1;
-    if (a.name > b.name) return 1;
-    return 0;
-  });
-
   const handleChange = (e) => {
     setInput({
       ...input,
