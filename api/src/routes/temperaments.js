@@ -1,21 +1,18 @@
 const { Router } = require("express");
 const axios = require("axios");
-const { Race, Temperament, Op } = require("../db.js");
+const { Temperament, Op } = require("../db.js");
 const { YOUR_API_KEY } = process.env;
 
 const temperament = Router();
 let populated = false;
 
-async function test() {
-  let data2 = await Temperament.findAll({
-    where: { name: { [Op.not]: null } },
-  });
-
-  if (data2.length > 0) populated = true;
-}
-test();
 temperament.get("/", async (req, res) => {
   try {
+    let testData = await Temperament.findAll({
+      where: { name: { [Op.not]: null } },
+    });
+
+    if (testData.length > 0) populated = true;
     if (!populated) {
       let response = await axios.get(
         `https://api.thedogapi.com/v1/breeds?api_key=${YOUR_API_KEY}`
