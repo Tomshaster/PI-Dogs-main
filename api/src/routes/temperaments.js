@@ -50,7 +50,7 @@ temperament.get("/", async (req, res) => {
     res.send(data);
   } catch (error) {
     console.log(error);
-    res.send({ msg: "algo salió mal :(" });
+    res.send(error);
   }
 });
 
