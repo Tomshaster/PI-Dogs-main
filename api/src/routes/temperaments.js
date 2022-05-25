@@ -6,12 +6,14 @@ const { YOUR_API_KEY } = process.env;
 const temperament = Router();
 let populated = false;
 
-let data2 = await Temperament.findAll({
-  where: { name: { [Op.not]: null } },
-});
+async function test() {
+  let data2 = await Temperament.findAll({
+    where: { name: { [Op.not]: null } },
+  });
 
-if (data2.length > 0) populated = true;
-
+  if (data2.length > 0) populated = true;
+}
+test();
 temperament.get("/", async (req, res) => {
   try {
     if (!populated) {
