@@ -24,18 +24,17 @@ export default function Home() {
   const [search, setSearch] = useState("");
   const dispatch = useDispatch();
 
-  temperaments &&
-    temperaments.sort((a, b) => {
-      if (a.name < b.name) return -1;
-      if (a.name > b.name) return 1;
-      return 0;
-    });
-
   useEffect(() => {
     dispatch(getAllRaces());
     dispatch(getAllTemperaments());
     dispatch(clearTemperaments());
   }, []);
+
+  temperaments.sort((a, b) => {
+    if (a.name < b.name) return -1;
+    if (a.name > b.name) return 1;
+    return 0;
+  });
 
   useEffect(() => {
     setDisplayed(allRaces);
