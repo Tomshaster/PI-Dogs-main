@@ -9,10 +9,11 @@ let populated = false;
 temperament.get("/", async (req, res) => {
   try {
     let testData = await Temperament.findAll({
-      where: { name: { [Op.not]: null } },
+      where: { name: "Active" },
     });
 
     if (testData.length > 0) populated = true;
+
     if (!populated) {
       let response = await axios.get(
         `https://api.thedogapi.com/v1/breeds?api_key=${YOUR_API_KEY}`
