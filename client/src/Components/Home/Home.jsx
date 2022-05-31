@@ -174,6 +174,14 @@ export default function Home() {
     setPageNumber(1);
   };
 
+  const perroPesado = () => {
+    handleOrder("desc");
+    let perro = [races[0]];
+    setRaces(perro);
+    setPageNumber(1);
+    dispatch(getAllTemperaments());
+  };
+
   return (
     <div className="container">
       <div className="filters_search">
@@ -186,6 +194,7 @@ export default function Home() {
           />
           <button type="submit">Search</button>
         </form>
+        <button onClick={perroPesado}>perro pesado</button>
         <div>
           <Dropdown text="Display">
             <li onClick={() => toggleShow("api")}>Display Races from API</li>
@@ -196,7 +205,7 @@ export default function Home() {
         <div>
           <Dropdown text="Choose Temperaments">
             {temperaments.map((t) => {
-              return <Element text={t.name} />;
+              return <Element text={t.name} key={t.id} />;
             })}
           </Dropdown>
           <button onClick={handleFilter}>Filter</button>
@@ -225,6 +234,7 @@ export default function Home() {
                     temp={r.temperament}
                     weight={r.weight}
                     id={r.api_id}
+                    key={r.api_id}
                   />
                 </div>
               );
@@ -239,6 +249,7 @@ export default function Home() {
                     temp={temp}
                     weight={r.weight}
                     id={r.name}
+                    key={r.db_id}
                   />
                 </div>
               );
